@@ -39,13 +39,11 @@
                         if (preg_match('/^\d+$/', $_POST['red'])) {
                             echo "您購買紅標" . $_POST['red'] . "片";
                             if (intval($_POST['red']) > 0) {
-                                $price  = $this->calculateRedPrice($price);
+                                $price  += $this->calculateRedPrice();
                             }
                             echo "<br>";
                             
-                            $red_point = $this->calculateRedPoint();
-
-                            $point += $red_point;
+                            $point += $this->calculateRedPoint();
                         }
                         else {
                             echo "紅標數量請輸入非負整數! <br>";
@@ -56,13 +54,11 @@
                         if (preg_match('/^\d+$/', $_POST['green'])) {
                             echo "您購買綠標" . $_POST['green'] . "片";
                             if (intval($_POST['green']) > 0) {
-                                $price  = $this->calculateGreenPrice($price);
+                                $price  += $this->calculateGreenPrice();
                             }
                             echo "<br>";
 
-                            $green_point = $this->calculateGreenPoint();
-
-                            $point += $green_point;
+                            $point += $this->calculateGreenPoint();
                         }
                         else {
                             echo "綠標數量請輸入非負整數! <br>";
@@ -73,7 +69,7 @@
                         if (preg_match('/^\d+$/', $_POST['blue'])) {
                             echo "您購買藍標" . $_POST['blue'] . "片";
                             if (intval($_POST['blue']) > 0) {
-                                $price  = $this->calculateBluePrice($price);
+                                $price  += $this->calculateBluePrice();
                             }
                             echo "<br>";
                         }
@@ -92,7 +88,8 @@
             }
         }
 
-        private function calculateRedPrice($price) {
+        private function calculateRedPrice() {
+            $price = 0;
             if (intval($_POST['red']) <= 2) {
                 $price += 60;
                 if (intval($_POST['red']) != 2) {
@@ -114,7 +111,8 @@
             return $red_point;
         }
 
-        private function calculateGreenPrice($price) {
+        private function calculateGreenPrice() {
+            $price = 0;
             if (intval($_POST['green']) <= 3) {
                 $price += 30;
                 if (intval($_POST['green']) != 3) {
@@ -135,7 +133,8 @@
             return $green_point;
         }
 
-        private function calculateBluePrice($price) {
+        private function calculateBluePrice() {
+            $price = 0;
             if (intval($_POST['blue']) <= 3) {
                 $price += 25;
                 if (intval($_POST['blue']) != 3) {
