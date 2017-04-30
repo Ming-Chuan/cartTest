@@ -56,20 +56,11 @@
                         if (preg_match('/^\d+$/', $_POST['green'])) {
                             echo "您購買綠標" . $_POST['green'] . "片";
                             if (intval($_POST['green']) > 0) {
-                                if (intval($_POST['green']) <= 3) {
-                                    $price += 30;
-                                    if (intval($_POST['green']) != 3) {
-                                        echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
-                                    }
-                                }
-                                else {
-                                    $price += 30 + (intval($_POST['green']) - 3) * 12;
-                                }
+                                $price  = $this->calculateGreenPrice($price);
                             }
                             echo "<br>";
 
-                            $green_point = intval($_POST['green']) * 1;
-                            if ($green_point > 8) $green_point = 8;
+                            $green_point = $this->calculateGreenPoint();
 
                             $point += $green_point;
                         }
@@ -82,15 +73,7 @@
                         if (preg_match('/^\d+$/', $_POST['blue'])) {
                             echo "您購買藍標" . $_POST['blue'] . "片";
                             if (intval($_POST['blue']) > 0) {
-                                if (intval($_POST['blue']) <= 3) {
-                                    $price += 25;
-                                    if (intval($_POST['blue']) != 3) {
-                                        echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
-                                    }
-                                }
-                                else {
-                                    $price += 25 + (intval($_POST['blue']) - 3) * 10;
-                                }
+                                $price  = $this->calculateBluePrice($price);
                             }
                             echo "<br>";
                         }
@@ -129,6 +112,40 @@
                 $red_point = 15;
             }
             return $red_point;
+        }
+
+        private function calculateGreenPrice($price) {
+            if (intval($_POST['green']) <= 3) {
+                $price += 30;
+                if (intval($_POST['green']) != 3) {
+                    echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
+                }
+            }
+            else {
+                $price += 30 + (intval($_POST['green']) - 3) * 12;
+            }
+            return $price;
+        }
+
+        private function calculateGreenPoint() {
+            $green_point = intval($_POST['green']) * 1;
+            if ($green_point > 8) {
+                $green_point = 8;
+            }
+            return $green_point;
+        }
+
+        private function calculateBluePrice($price) {
+            if (intval($_POST['blue']) <= 3) {
+                $price += 25;
+                if (intval($_POST['blue']) != 3) {
+                    echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
+                }
+            }
+            else {
+                $price += 25 + (intval($_POST['blue']) - 3) * 10;
+            }
+            return $price;
         }
     }
 
