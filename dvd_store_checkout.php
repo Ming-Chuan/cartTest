@@ -43,7 +43,7 @@
                             }
                             echo "<br>";
                             
-                            $red_point = $this->calculateRedPoint()
+                            $red_point = $this->calculateRedPoint();
 
                             $point += $red_point;
                         }
