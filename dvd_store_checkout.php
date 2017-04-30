@@ -39,15 +39,7 @@
                         if (preg_match('/^\d+$/', $_POST['red'])) {
                             echo "您購買紅標" . $_POST['red'] . "片";
                             if (intval($_POST['red']) > 0) {
-                                if (intval($_POST['red']) <= 2) {
-                                    $price += 60;
-                                    if (intval($_POST['red']) != 2) {
-                                        echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
-                                    }
-                                }
-                                else {
-                                    $price += 60 + (intval($_POST['red']) - 2) * 40;
-                                }
+                                $price  = $this->calculateRedPrice($price);
                             }
                             echo "<br>";
 
@@ -116,6 +108,20 @@
                     }
                 }
             }
+        }
+
+        private function calculateRedPrice($price) {
+            if (intval($_POST['red']) <= 2) {
+                $price += 60;
+                if (intval($_POST['red']) != 2) {
+                    echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
+                }
+            }
+            else {
+                $price += 60 + (intval($_POST['red']) - 2) * 40;
+            }
+
+            return $price;
         }
     }
 
