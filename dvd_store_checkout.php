@@ -38,6 +38,9 @@
                     if ($_POST['red'] != '') {
                         if (preg_match('/^\d+$/', $_POST['red'])) {
                             echo "您購買紅標" . $_POST['red'] . "片";
+                            if (intval($_POST['red']) > 0 && intval($_POST['red']) < 2) {
+                                echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
+                            }
                             if (intval($_POST['red']) > 0) {
                                 $price  += $this->calculateRedPrice();
                             }
@@ -54,6 +57,9 @@
                         if (preg_match('/^\d+$/', $_POST['green'])) {
                             echo "您購買綠標" . $_POST['green'] . "片";
                             if (intval($_POST['green']) > 0) {
+                                if (intval($_POST['green']) < 3) {
+                                    echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
+                                }
                                 $price  += $this->calculateGreenPrice();
                             }
                             echo "<br>";
@@ -69,6 +75,9 @@
                         if (preg_match('/^\d+$/', $_POST['blue'])) {
                             echo "您購買藍標" . $_POST['blue'] . "片";
                             if (intval($_POST['blue']) > 0) {
+                                if (intval($_POST['blue']) < 3) {
+                                    echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
+                                }
                                 $price  += $this->calculateBluePrice();
                             }
                             echo "<br>";
@@ -92,9 +101,6 @@
             $price = 0;
             if (intval($_POST['red']) <= 2) {
                 $price += 60;
-                if (intval($_POST['red']) != 2) {
-                    echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
-                }
             }
             else {
                 $price += 60 + (intval($_POST['red']) - 2) * 40;
@@ -115,9 +121,6 @@
             $price = 0;
             if (intval($_POST['green']) <= 3) {
                 $price += 30;
-                if (intval($_POST['green']) != 3) {
-                    echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
-                }
             }
             else {
                 $price += 30 + (intval($_POST['green']) - 3) * 12;
@@ -137,9 +140,6 @@
             $price = 0;
             if (intval($_POST['blue']) <= 3) {
                 $price += 25;
-                if (intval($_POST['blue']) != 3) {
-                    echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
-                }
             }
             else {
                 $price += 25 + (intval($_POST['blue']) - 3) * 10;
