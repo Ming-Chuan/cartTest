@@ -42,9 +42,8 @@
                                 $price  = $this->calculateRedPrice($price);
                             }
                             echo "<br>";
-
-                            $red_point = intval($_POST['red']) * 3;
-                            if ($red_point > 15) $red_point = 15;
+                            
+                            $red_point = $this->calculateRedPoint()
 
                             $point += $red_point;
                         }
@@ -122,6 +121,14 @@
             }
 
             return $price;
+        }
+
+        private function calculateRedPoint() {
+            $red_point = intval($_POST['red']) * 3;
+            if ($red_point > 15) {
+                $red_point = 15;
+            }
+            return $red_point;
         }
     }
 
