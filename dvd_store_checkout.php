@@ -49,7 +49,7 @@
                             if (intval($this->count['red']) > 0) {
                                 $price  += $this->calculatePrice('red');
                             }
-                            $point += $this->calculateRedPoint();
+                            $point += $this->calculatePoint('red');
                         }
                     }
 
@@ -60,7 +60,7 @@
                             if (intval($this->count['green']) > 0) {
                                 $price  += $this->calculatePrice('green');
                             }
-                            $point += $this->calculateGreenPoint();
+                            $point += $this->calculatePoint('green');
                         }
                     }
 
@@ -159,6 +159,26 @@
             }
 
             return $price;
+        }
+
+        private function calculatePoint($type) {
+            switch ($type) {
+                case 'red':
+                    $bonus          = 3;
+                    $bonusUpLimit   = 15;
+                    break;
+                case 'green':
+                    $bonus          = 1;
+                    $bonusUpLimit   = 8;
+                    break;
+            }
+
+            $point  = intval($this->count[$type]) * $bonus;
+            if ($point > $bonusUpLimit) {
+                $point = $bonusUpLimit;     
+            } 
+            
+            return $point;
         }
 
         private $count;
