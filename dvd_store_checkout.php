@@ -36,17 +36,7 @@
                     $price = 0;
                     $point = 0;
                     if ($_POST['red'] != '') {
-                        // print
-                        if (preg_match('/^\d+$/', $_POST['red'])) {
-                            echo "您購買紅標" . $_POST['red'] . "片";
-                            if (intval($_POST['red']) > 0 && intval($_POST['red']) < 2) {
-                                echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
-                            }
-                            echo "<br>";
-                        }
-                        else {
-                            echo "紅標數量請輸入非負整數! <br>";
-                        }
+                        $this->printRedMsg();
                         // calculate
                         if (preg_match('/^\d+$/', $_POST['red'])) {
                             if (intval($_POST['red']) > 0) {
@@ -57,17 +47,7 @@
                     }
 
                     if ($_POST['green'] != '') {
-                        // print
-                        if (preg_match('/^\d+$/', $_POST['green'])) {
-                            echo "您購買綠標" . $_POST['green'] . "片";
-                            if (intval($_POST['green']) > 0 && intval($_POST['green']) < 3) {
-                                echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
-                            }
-                            echo "<br>";
-                        }
-                        else {
-                            echo "綠標數量請輸入非負整數! <br>";
-                        }
+                        $this->printGreenMsg();
                         // calculate
                         if (preg_match('/^\d+$/', $_POST['green'])) {
                             if (intval($_POST['green']) > 0) {
@@ -78,17 +58,7 @@
                     }
 
                     if ($_POST['blue'] != '') {
-                        // print
-                        if (preg_match('/^\d+$/', $_POST['blue'])) {
-                            echo "您購買藍標" . $_POST['blue'] . "片";
-                            if (intval($_POST['blue']) > 0 && intval($_POST['blue']) < 3) {
-                                echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
-                            }
-                            echo "<br>";
-                        }
-                        else {
-                            echo "藍標數量請輸入非負整數! <br>";
-                        }
+                        $this->printBlueMsg();
                         // calculate
                         if (preg_match('/^\d+$/', $_POST['blue'])) {
                             if (intval($_POST['blue']) > 0) {
@@ -155,6 +125,45 @@
                 $price += 25 + (intval($_POST['blue']) - 3) * 10;
             }
             return $price;
+        }
+
+        private function printRedMsg() {
+            if (preg_match('/^\d+$/', $_POST['red'])) {
+                echo "您購買紅標" . $_POST['red'] . "片";
+                if (intval($_POST['red']) > 0 && intval($_POST['red']) < 2) {
+                    echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
+                }
+                echo "<br>";
+            }
+            else {
+                echo "紅標數量請輸入非負整數! <br>";
+            }
+        }
+
+        private function printGreenMsg() {
+            if (preg_match('/^\d+$/', $_POST['green'])) {
+                echo "您購買綠標" . $_POST['green'] . "片";
+                if (intval($_POST['green']) > 0 && intval($_POST['green']) < 3) {
+                    echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
+                }
+                echo "<br>";
+            }
+            else {
+                echo "綠標數量請輸入非負整數! <br>";
+            }
+        }
+
+        private function printBlueMsg() {
+            if (preg_match('/^\d+$/', $_POST['blue'])) {
+                echo "您購買藍標" . $_POST['blue'] . "片";
+                if (intval($_POST['blue']) > 0 && intval($_POST['blue']) < 3) {
+                    echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
+                }
+                echo "<br>";
+            }
+            else {
+                echo "藍標數量請輸入非負整數! <br>";
+            }
         }
     }
 
