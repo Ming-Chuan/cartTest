@@ -156,7 +156,7 @@
 
             if ($this->isNumber($this->count[$type])) {
                 echo "您購買{$name}" . $this->count[$type] . "片"; 
-                if (intval($this->count[$type]) > 0 && intval($thiss->count[$type]) < $discount) {
+                if (intval($this->count[$type]) > 0 && intval($this->count[$type]) < $discount) {
                     echo ", 可以再多拿" . strval($discount - intval($this->count[$type])) . "片, 價格不變喔!";
                 }
                 echo "<br>";
