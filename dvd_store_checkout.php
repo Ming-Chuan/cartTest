@@ -36,54 +36,64 @@
                     $price = 0;
                     $point = 0;
                     if ($_POST['red'] != '') {
+                        // print
                         if (preg_match('/^\d+$/', $_POST['red'])) {
                             echo "您購買紅標" . $_POST['red'] . "片";
                             if (intval($_POST['red']) > 0 && intval($_POST['red']) < 2) {
                                 echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
                             }
-                            if (intval($_POST['red']) > 0) {
-                                $price  += $this->calculateRedPrice();
-                            }
                             echo "<br>";
-                            
-                            $point += $this->calculateRedPoint();
                         }
                         else {
                             echo "紅標數量請輸入非負整數! <br>";
                         }
+                        // calculate
+                        if (preg_match('/^\d+$/', $_POST['red'])) {
+                            if (intval($_POST['red']) > 0) {
+                                $price  += $this->calculateRedPrice();
+                            }
+                            $point += $this->calculateRedPoint();
+                        }
                     }
 
                     if ($_POST['green'] != '') {
+                        // print
                         if (preg_match('/^\d+$/', $_POST['green'])) {
                             echo "您購買綠標" . $_POST['green'] . "片";
-                            if (intval($_POST['green']) > 0) {
-                                if (intval($_POST['green']) < 3) {
-                                    echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
-                                }
-                                $price  += $this->calculateGreenPrice();
+                            if (intval($_POST['green']) > 0 && intval($_POST['green']) < 3) {
+                                echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
                             }
                             echo "<br>";
-
-                            $point += $this->calculateGreenPoint();
                         }
                         else {
                             echo "綠標數量請輸入非負整數! <br>";
                         }
+                        // calculate
+                        if (preg_match('/^\d+$/', $_POST['green'])) {
+                            if (intval($_POST['green']) > 0) {
+                                $price  += $this->calculateGreenPrice();
+                            }
+                            $point += $this->calculateGreenPoint();
+                        }
                     }
 
                     if ($_POST['blue'] != '') {
+                        // print
                         if (preg_match('/^\d+$/', $_POST['blue'])) {
                             echo "您購買藍標" . $_POST['blue'] . "片";
-                            if (intval($_POST['blue']) > 0) {
-                                if (intval($_POST['blue']) < 3) {
-                                    echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
-                                }
-                                $price  += $this->calculateBluePrice();
+                            if (intval($_POST['blue']) > 0 && intval($_POST['blue']) < 3) {
+                                echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
                             }
                             echo "<br>";
                         }
                         else {
                             echo "藍標數量請輸入非負整數! <br>";
+                        }
+                        // calculate
+                        if (preg_match('/^\d+$/', $_POST['blue'])) {
+                            if (intval($_POST['blue']) > 0) {
+                                $price  += $this->calculateBluePrice();
+                            }
                         }
                     }
 
