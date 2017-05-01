@@ -43,35 +43,21 @@
                     $price = 0;
                     $point = 0;
                     if ($this->count['red'] != '') {
-                        $this->printMsg('red');
-                        // calculate
-                        if ($this->isNumber($this->count['red'])) {
-                            if (intval($this->count['red']) > 0) {
-                                $price  += $this->calculatePrice('red');
-                            }
-                            $point += $this->calculatePoint('red');
-                        }
+                        list($tPrice, $tPoint)  = $this->processDVD('red');
+                        $price  += $tPrice;
+                        $point  += $tPoint;
                     }
 
                     if ($this->count['green'] != '') {
-                        $this->printMsg('green');
-                        // calculate
-                        if ($this->isNumber($this->count['green'])) {
-                            if (intval($this->count['green']) > 0) {
-                                $price  += $this->calculatePrice('green');
-                            }
-                            $point += $this->calculatePoint('green');
-                        }
+                        list($tPrice, $tPoint)  = $this->processDVD('green');
+                        $price  += $tPrice;
+                        $point  += $tPoint;
                     }
 
                     if ($this->count['blue'] != '') {
-                        $this->printMsg('blue');
-                        // calculate
-                        if ($this->isNumber($this->count['blue'])) {
-                            if (intval($this->count['blue']) > 0) {
-                                $price  += $this->calculatePrice('blue');
-                            }
-                        }
+                        list($tPrice, $tPoint)  = $this->processDVD('blue');
+                        $price  += $tPrice;
+                        $point  += $tPoint;
                     }
 
                     echo "總金額 {$price} 元 <br>";
@@ -173,12 +159,34 @@
                     break;
             }
 
-            $point  = intval($this->count[$type]) * $bonus;
-            if ($point > $bonusUpLimit) {
-                $point = $bonusUpLimit;     
-            } 
+            if ($type != 'blue') {
+                $point  = intval($this->count[$type]) * $bonus;
+                if ($point > $bonusUpLimit) {
+                    $point = $bonusUpLimit;     
+                } 
+            }
+            else {
+                $point = 0;
+            }
             
             return $point;
+        }
+
+        private function processDVD($type) {
+            $price = 0;
+            $point = 0;
+            $this->printMsg($type);
+            if ($this->isNumber($this->count[$type])) {
+                if (intval($this->count[$type]) > 0) {
+                    $price  = $this->calculatePrice($type);
+                }
+                $point = $this->calculatePoint($type);
+            }
+
+            returun array(
+                'price' => $price,
+                'point' => $point
+            );
         }
 
         private $count;
