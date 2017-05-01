@@ -38,7 +38,7 @@
                     if ($_POST['red'] != '') {
                         $this->printRedMsg();
                         // calculate
-                        if (preg_match('/^\d+$/', $_POST['red'])) {
+                        if ($this->isNumber($_POST['red'])) {
                             if (intval($_POST['red']) > 0) {
                                 $price  += $this->calculateRedPrice();
                             }
@@ -49,7 +49,7 @@
                     if ($_POST['green'] != '') {
                         $this->printGreenMsg();
                         // calculate
-                        if (preg_match('/^\d+$/', $_POST['green'])) {
+                        if ($this->isNumber($_POST['green'])) {
                             if (intval($_POST['green']) > 0) {
                                 $price  += $this->calculateGreenPrice();
                             }
@@ -60,7 +60,7 @@
                     if ($_POST['blue'] != '') {
                         $this->printBlueMsg();
                         // calculate
-                        if (preg_match('/^\d+$/', $_POST['blue'])) {
+                        if ($this->isNumber($_POST['blue'])) {
                             if (intval($_POST['blue']) > 0) {
                                 $price  += $this->calculateBluePrice();
                             }
@@ -128,7 +128,7 @@
         }
 
         private function printRedMsg() {
-            if (preg_match('/^\d+$/', $_POST['red'])) {
+            if ($this->isNumber($_POST['red'])) {
                 echo "您購買紅標" . $_POST['red'] . "片";
                 if (intval($_POST['red']) > 0 && intval($_POST['red']) < 2) {
                     echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
@@ -141,7 +141,7 @@
         }
 
         private function printGreenMsg() {
-            if (preg_match('/^\d+$/', $_POST['green'])) {
+            if ($this->isNumber($_POST['green'])) {
                 echo "您購買綠標" . $_POST['green'] . "片";
                 if (intval($_POST['green']) > 0 && intval($_POST['green']) < 3) {
                     echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
@@ -154,7 +154,7 @@
         }
 
         private function printBlueMsg() {
-            if (preg_match('/^\d+$/', $_POST['blue'])) {
+            if ($this->isNumber($_POST['blue'])) {
                 echo "您購買藍標" . $_POST['blue'] . "片";
                 if (intval($_POST['blue']) > 0 && intval($_POST['blue']) < 3) {
                     echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
@@ -164,6 +164,10 @@
             else {
                 echo "藍標數量請輸入非負整數! <br>";
             }
+        }
+
+        private function isNumber($string) {
+            return preg_match('/^\d+$/', $string);
         }
     }
 
