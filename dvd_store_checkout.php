@@ -183,7 +183,7 @@
                 $point = $this->calculatePoint($type);
             }
 
-            returun array(
+            return array(
                 'price' => $price,
                 'point' => $point
             );
