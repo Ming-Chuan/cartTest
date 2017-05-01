@@ -47,7 +47,7 @@
                         // calculate
                         if ($this->isNumber($this->count['red'])) {
                             if (intval($this->count['red']) > 0) {
-                                $price  += $this->calculateRedPrice();
+                                $price  += $this->calculatePrice('red');
                             }
                             $point += $this->calculateRedPoint();
                         }
@@ -58,7 +58,7 @@
                         // calculate
                         if ($this->isNumber($this->count['green'])) {
                             if (intval($this->count['green']) > 0) {
-                                $price  += $this->calculateGreenPrice();
+                                $price  += $this->calculatePrice('green');
                             }
                             $point += $this->calculateGreenPoint();
                         }
@@ -69,7 +69,7 @@
                         // calculate
                         if ($this->isNumber($this->count['blue'])) {
                             if (intval($this->count['blue']) > 0) {
-                                $price  += $this->calculateBluePrice();
+                                $price  += $this->calculatePrice('blue');
                             }
                         }
                     }
@@ -84,18 +84,6 @@
             }
         }
 
-        private function calculateRedPrice() {
-            $price = 0;
-            if (intval($this->count['red']) <= 2) {
-                $price += 60;
-            }
-            else {
-                $price += 60 + (intval($this->count['red']) - 2) * 40;
-            }
-
-            return $price;
-        }
-
         private function calculateRedPoint() {
             $red_point = intval($this->count['red']) * 3;
             if ($red_point > 15) {
@@ -104,34 +92,12 @@
             return $red_point;
         }
 
-        private function calculateGreenPrice() {
-            $price = 0;
-            if (intval($this->count['green']) <= 3) {
-                $price += 30;
-            }
-            else {
-                $price += 30 + (intval($this->count['green']) - 3) * 12;
-            }
-            return $price;
-        }
-
         private function calculateGreenPoint() {
             $green_point = intval($this->count['green']) * 1;
             if ($green_point > 8) {
                 $green_point = 8;
             }
             return $green_point;
-        }
-
-        private function calculateBluePrice() {
-            $price = 0;
-            if (intval($this->count['blue']) <= 3) {
-                $price += 25;
-            }
-            else {
-                $price += 25 + (intval($this->count['blue']) - 3) * 10;
-            }
-            return $price;
         }
 
         private function isNumber($string) {
@@ -164,6 +130,35 @@
             else {
                 echo "{$name}數量請輸入非負整數! <br>";
             }
+        }
+
+        private function calculatePrice($type) {
+            switch ($type) {
+                case 'red':
+                    $discount       = 2;
+                    $discountPrice  = 60;
+                    $eachPrice      = 40;
+                    break;
+                case 'green':
+                    $discount       = 3;
+                    $discountPrice  = 30;
+                    $eachPrice      = 12;
+                    break;
+                case 'blue':
+                    $discount       = 3;
+                    $discountPrice  = 25;
+                    $eachPrice      = 10;
+                    break;
+            }
+
+            if (intval($this->count[$type]) <= $discount) {
+                $price  = $discountPrice;
+            }
+            else {
+                $price  = $discountPrice + (intval($this->count[$type]) - $discount) * $eachPrice;
+            }
+
+            return $price;
         }
 
         private $count;
