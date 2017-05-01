@@ -27,41 +27,48 @@
 <br>
 <?php
     class shoppingCart {
+        public function __construct() {
+            $this->count    = array(
+                'red'   => $_POST['red'],
+                'green' => $_POST['green'],
+                'blue'  => $_POST['blue']
+            );
+        }
         public function checkOut() {
-            if (isset($_POST['red'])) {
-                if ($_POST['red'] == '' && $_POST['green'] == '' && $_POST['blue'] == '') {
+            if (isset($this->count['red'])) {
+                if ($this->count['red'] == '' && $this->count['green'] == '' && $this->count['blue'] == '') {
                     echo "請輸入 dvd 數量! <br>";
                 }
                 else {
                     $price = 0;
                     $point = 0;
-                    if ($_POST['red'] != '') {
-                        $this->printRedMsg();
+                    if ($this->count['red'] != '') {
+                        $this->printMsg('red');
                         // calculate
-                        if ($this->isNumber($_POST['red'])) {
-                            if (intval($_POST['red']) > 0) {
+                        if ($this->isNumber($this->count['red'])) {
+                            if (intval($this->count['red']) > 0) {
                                 $price  += $this->calculateRedPrice();
                             }
                             $point += $this->calculateRedPoint();
                         }
                     }
 
-                    if ($_POST['green'] != '') {
-                        $this->printGreenMsg();
+                    if ($this->count['green'] != '') {
+                        $this->printMsg('green');
                         // calculate
-                        if ($this->isNumber($_POST['green'])) {
-                            if (intval($_POST['green']) > 0) {
+                        if ($this->isNumber($this->count['green'])) {
+                            if (intval($this->count['green']) > 0) {
                                 $price  += $this->calculateGreenPrice();
                             }
                             $point += $this->calculateGreenPoint();
                         }
                     }
 
-                    if ($_POST['blue'] != '') {
-                        $this->printBlueMsg();
+                    if ($this->count['blue'] != '') {
+                        $this->printMsg('blue');
                         // calculate
-                        if ($this->isNumber($_POST['blue'])) {
-                            if (intval($_POST['blue']) > 0) {
+                        if ($this->isNumber($this->count['blue'])) {
+                            if (intval($this->count['blue']) > 0) {
                                 $price  += $this->calculateBluePrice();
                             }
                         }
@@ -79,18 +86,18 @@
 
         private function calculateRedPrice() {
             $price = 0;
-            if (intval($_POST['red']) <= 2) {
+            if (intval($this->count['red']) <= 2) {
                 $price += 60;
             }
             else {
-                $price += 60 + (intval($_POST['red']) - 2) * 40;
+                $price += 60 + (intval($this->count['red']) - 2) * 40;
             }
 
             return $price;
         }
 
         private function calculateRedPoint() {
-            $red_point = intval($_POST['red']) * 3;
+            $red_point = intval($this->count['red']) * 3;
             if ($red_point > 15) {
                 $red_point = 15;
             }
@@ -99,17 +106,17 @@
 
         private function calculateGreenPrice() {
             $price = 0;
-            if (intval($_POST['green']) <= 3) {
+            if (intval($this->count['green']) <= 3) {
                 $price += 30;
             }
             else {
-                $price += 30 + (intval($_POST['green']) - 3) * 12;
+                $price += 30 + (intval($this->count['green']) - 3) * 12;
             }
             return $price;
         }
 
         private function calculateGreenPoint() {
-            $green_point = intval($_POST['green']) * 1;
+            $green_point = intval($this->count['green']) * 1;
             if ($green_point > 8) {
                 $green_point = 8;
             }
@@ -118,57 +125,48 @@
 
         private function calculateBluePrice() {
             $price = 0;
-            if (intval($_POST['blue']) <= 3) {
+            if (intval($this->count['blue']) <= 3) {
                 $price += 25;
             }
             else {
-                $price += 25 + (intval($_POST['blue']) - 3) * 10;
+                $price += 25 + (intval($this->count['blue']) - 3) * 10;
             }
             return $price;
-        }
-
-        private function printRedMsg() {
-            if ($this->isNumber($_POST['red'])) {
-                echo "您購買紅標" . $_POST['red'] . "片";
-                if (intval($_POST['red']) > 0 && intval($_POST['red']) < 2) {
-                    echo "，可以再多拿" . strval(2 - intval($_POST['red']))  . "片，價格不變唷!";
-                }
-                echo "<br>";
-            }
-            else {
-                echo "紅標數量請輸入非負整數! <br>";
-            }
-        }
-
-        private function printGreenMsg() {
-            if ($this->isNumber($_POST['green'])) {
-                echo "您購買綠標" . $_POST['green'] . "片";
-                if (intval($_POST['green']) > 0 && intval($_POST['green']) < 3) {
-                    echo "，可以再多拿" . strval(3 - intval($_POST['green'])) . "片，價格不變唷!";
-                }
-                echo "<br>";
-            }
-            else {
-                echo "綠標數量請輸入非負整數! <br>";
-            }
-        }
-
-        private function printBlueMsg() {
-            if ($this->isNumber($_POST['blue'])) {
-                echo "您購買藍標" . $_POST['blue'] . "片";
-                if (intval($_POST['blue']) > 0 && intval($_POST['blue']) < 3) {
-                    echo "，可以再多拿" . strval(3 - intval($_POST['blue'])) . "片，價格不變唷!";
-                }
-                echo "<br>";
-            }
-            else {
-                echo "藍標數量請輸入非負整數! <br>";
-            }
         }
 
         private function isNumber($string) {
             return preg_match('/^\d+$/', $string);
         }
+
+        private function printMsg($type) {
+            switch ($type) {
+                case 'red':
+                    $name       = '藍標';
+                    $discount   =  2;
+                    break;
+                case 'green':
+                    $name       = '綠標';
+                    $discount   =  3;
+                    break;
+                case 'blue':
+                    $name       = '藍標';
+                    $discount   =  3;
+                    break;
+            }
+
+            if ($this->isNumber($this->count[$type])) {
+                echo "您購買{$name}" . $this->count[$type] . "片"; 
+                if (intval($this->count[$type]) > 0 && intval($thiss->count[$type]) < $discount) {
+                    echo ", 可以再多拿" . strval($discount - intval($this->count[$type])) . "片, 價格不變喔!";
+                }
+                echo "<br>";
+            }
+            else {
+                echo "{$name}數量請輸入非負整數! <br>";
+            }
+        }
+
+        private $count;
     }
 
     $shoppingCart   = new shoppingCart();
