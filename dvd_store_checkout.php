@@ -42,22 +42,13 @@
                 else {
                     $price = 0;
                     $point = 0;
-                    if ($this->count['red'] != '') {
-                        list($tPrice, $tPoint)  = $this->processDVD('red');
-                        $price  += $tPrice;
-                        $point  += $tPoint;
-                    }
 
-                    if ($this->count['green'] != '') {
-                        list($tPrice, $tPoint)  = $this->processDVD('green');
-                        $price  += $tPrice;
-                        $point  += $tPoint;
-                    }
-
-                    if ($this->count['blue'] != '') {
-                        list($tPrice, $tPoint)  = $this->processDVD('blue');
-                        $price  += $tPrice;
-                        $point  += $tPoint;
+                    foreach ($this->count as $type => $value) {
+                        if ($value != '') {
+                            list($tPrice, $tPoint)  = $this->processDVD($type);
+                            $price  += $tPrice;
+                            $point  += $tPoint;
+                        }
                     }
 
                     echo "總金額 {$price} 元 <br>";
@@ -93,7 +84,7 @@
         private function printMsg($type) {
             switch ($type) {
                 case 'red':
-                    $name       = '藍標';
+                    $name       = '紅標';
                     $discount   =  2;
                     break;
                 case 'green':
@@ -183,10 +174,7 @@
                 $point = $this->calculatePoint($type);
             }
 
-            return array(
-                'price' => $price,
-                'point' => $point
-            );
+            return array($price, $point);
         }
 
         private $count;
